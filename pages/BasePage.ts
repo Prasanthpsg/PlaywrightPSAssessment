@@ -1,12 +1,12 @@
 import { Page } from '@playwright/test';
 import { logger } from '../utils/logger';
 import fs from 'fs';
-import { TestInfo , expect     } from '@playwright/test';
+import { TestInfo } from '@playwright/test';
 
 export abstract class BasePage {
   constructor(protected readonly page: Page) {}
 
-  async waitForPageLoad(): Promise<void> { 
+  async waitForPageLoad(): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded');
     logger.debug('Page DOM content loaded');
   }
@@ -16,11 +16,11 @@ export abstract class BasePage {
     logger.debug('Page load state: load');
   }
 
-  getPageTitle(): Promise<string> {
+  async getPageTitle(): Promise<string> {
     return this.page.title();
   }
 
-  getPageUrl(): string {
+  async getPageUrl(): Promise<string> {
     return this.page.url();
   }
 
