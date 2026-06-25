@@ -1,12 +1,12 @@
 import { Page } from '@playwright/test';
 import { logger } from '../utils/logger';
 import fs from 'fs';
-import { TestInfo , expect  } from '@playwright/test';
+import { TestInfo , expect     } from '@playwright/test';
 
 export abstract class BasePage {
   constructor(protected readonly page: Page) {}
 
-  async waitForPageLoad(): Promise<void> {
+  async waitForPageLoad(): Promise<void> { 
     await this.page.waitForLoadState('domcontentloaded');
     logger.debug('Page DOM content loaded');
   }
