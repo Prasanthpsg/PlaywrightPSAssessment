@@ -20,6 +20,9 @@
     "prettier": "^3.8.4",
     "typescript-eslint": "^8.62.0"
   },
+  "lint-staged": {
+  "*.{ts,js}": "eslint"
+},
   "scripts": {
     "qa:saucelabtests": "cross-env ENV=qa npx playwright test tests/01_SauceLabflow.spec.ts",
     "lint": "eslint . --ext .ts --max-warnings=0",
