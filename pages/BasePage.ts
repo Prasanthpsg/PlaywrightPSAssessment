@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { logger } from '../utils/logger';
 import fs from 'fs';
-import { TestInfo } from '@playwright/test';
+import { TestInfo , expect } from '@playwright/test';
 
 export abstract class BasePage {
   constructor(protected readonly page: Page) {}
