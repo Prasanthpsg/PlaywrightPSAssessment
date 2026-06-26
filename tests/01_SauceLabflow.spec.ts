@@ -1,4 +1,5 @@
 import { expect, test } from '../fixtures';
+import { logger } from '../utils/logger';
 
 test('TC_01 Sauce lab Login functionality validation', async ({
   loginPage,
@@ -24,6 +25,30 @@ test('TC_02 Add and Remove Items from Cart validation', async ({
   expect(addedItems).toEqual(getaddedItems); // items validation in cart page
   await cartPage.removeItem(); // remove one item in the cart
   await cartPage.validateOneProduct();
+  await productsPage.clickOpenMenu(); //Log out
+  await productsPage.clickLogout();
+});
+
+test('TC_03 Products page sorting functionality validation', async ({
+  loginPage,
+  productsPage,
+}, testInfo) => {
+  await loginPage.navigateToLoginPage();
+  await loginPage.logIn(testInfo);
+  await productsPage.waitForPageLoad();
+  await productsPage.verifyProductPageTitle(testInfo);
+  const priceBeforeSorting: number[] = await productsPage.getPriceDetails();
+  const sortedAmounts = [...priceBeforeSorting].sort((a, b) => a - b);
+  logger.info(`Price sort own logic: ${JSON.stringify(sortedAmounts)}`);
+  //UI sorting
+  await productsPage.selectDropdownValue();
+  await productsPage.waitForPageLoad();
+  const priceAfterSorting: number[] = await productsPage.getPriceDetails();
+  logger.info(`Price sort UI logic: ${JSON.stringify(priceAfterSorting)}`);
+  expect(sortedAmounts).toEqual(priceAfterSorting); //Price sorting validationg
+  await productsPage.captureScreenshot(testInfo);
+  await productsPage.clickOpenMenu(); //Log out
+  await productsPage.clickLogout();
 });
 
 test('TC_04 End-to-end checkout process validation', async ({
@@ -52,4 +77,6 @@ test('TC_04 End-to-end checkout process validation', async ({
   await confirmationPage.verifyConfirmationPageTitle(); // confirmation page verification
   await confirmationPage.verifyConfirmationPageSuccessText();
   await confirmationPage.verifyBackHomeButton();
+  await productsPage.clickOpenMenu(); //Log out
+  await productsPage.clickLogout();
 });

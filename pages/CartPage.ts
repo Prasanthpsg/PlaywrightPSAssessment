@@ -22,7 +22,7 @@ export class CartPage extends BasePage {
 
   async verifyCartPageTitle(testInfo?: TestInfo): Promise<void> {
     await this.takeScreenshot('Cart Page', testInfo);
-    await expect(this.cartPageTitle).toHaveText('Your Cart'); // asserting the title text to be 'Products'
+    await expect(this.cartPageTitle).toHaveText('Your Cart'); // asserting the title text to be 'cart'
   }
 
   async getCartItems(): Promise<string[]> {
