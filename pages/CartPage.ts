@@ -6,12 +6,14 @@ export class CartPage extends BasePage {
   readonly cartPageTitle: Locator;
   readonly itemsDescriptions: Locator;
   readonly removeFirtsItem: Locator;
+  readonly buttonCheckout: Locator;
 
   constructor(page: Page) {
     super(page);
     this.cartPageTitle = page.locator('.header_secondary_container .title');
     this.itemsDescriptions = page.locator('.inventory_item_name');
     this.removeFirtsItem = page.getByRole('button', { name: 'Remove' });
+    this.buttonCheckout = page.getByRole('button', { name: 'Checkout' });
   }
 
   async waitForPageLoad(): Promise<void> {
@@ -38,5 +40,9 @@ export class CartPage extends BasePage {
 
   async validateOneProduct(): Promise<void> {
     expect(this.itemsDescriptions).toHaveCount(1);
+  }
+
+  async clickCheckOut(): Promise<void> {
+    await this.buttonCheckout.click();
   }
 }
